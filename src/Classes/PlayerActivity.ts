@@ -9,5 +9,4 @@ export default class PlayerActivity extends CommonActivity {
         this.score = score;
         this.fixedDuration = fixedDuration;
     }
-
 } 
