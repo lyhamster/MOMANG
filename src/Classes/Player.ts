@@ -7,23 +7,21 @@ class Player extends ActivityOwner <PlayerActivity> {
     health = 3;
     currentActivity: string | null = null;
     activityTimeout: number = 0;
-    sensesArr: string[] = []; 
+
     constructor(listActivities: PlayerActivity[]) {
         super(listActivities);
     }
 
     doActivity (activityName: string): void {
-        this.listActivities.forEach((eachActivity) => {
-            if (eachActivity.label === activityName) {
+        this.listActivities.forEach((activity) => {
+            if (activity.label === activityName) {
                 this.currentActivity = activityName;
                 this.activityTimeout = setInterval(() => {
                     this.seconds++;
-    
-                    this.sensesArr = eachActivity.senses;
-                    
-                    if (this.seconds >= eachActivity.fixedDuration) {
+
+                    if (this.seconds >= activity.fixedDuration) {
                         this.stopActivity();
-                        this.playerScore += eachActivity.score;
+                        this.playerScore += activity.score;
                     } 
                 }, 1000)
             }
@@ -39,10 +37,6 @@ class Player extends ActivityOwner <PlayerActivity> {
         } 
     }
 
-    public get senses() {
-        return this.sensesArr; 
-    }
-
     getCaught(): void {
         if (this.health === 0) {
             this.stopActivity();
@@ -51,5 +45,4 @@ class Player extends ActivityOwner <PlayerActivity> {
         this.health--;
         this.stopActivity(); 
     }
-    
 }
