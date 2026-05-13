@@ -5,9 +5,9 @@ class Momang extends ActivityOwner <MomangActivity> {
     seconds = 0;
     currentActivity: string | null = null;
     activityTimeout: number = 0;
-
+    sensesArr: string[] = [];
     constructor(listActivities: MomangActivity[]) {
-        super(listActivities)
+        super(listActivities);
     }
 
     doActivity(activity: string): void {
@@ -15,14 +15,13 @@ class Momang extends ActivityOwner <MomangActivity> {
             if (eachActivity.label === activity) {
                 this.currentActivity = activity;
                 this.activityTimeout = setInterval(() => {
-                this.seconds++;
-                
-                eachActivity.senses
+                    this.seconds++;
+                    
+                    this.sensesArr = eachActivity.senses;
 
-                if (this.seconds >= eachActivity.givenDuration) {
-                    this.stopActivity();
-                }
-                
+                    if (this.seconds >= eachActivity.givenDuration) {
+                        this.stopActivity();
+                    }
                 }, 1000);        
             }        
         })         
@@ -35,5 +34,13 @@ class Momang extends ActivityOwner <MomangActivity> {
             this.activityTimeout = 0;
             this.seconds = 0;
         }
+    }
+    
+    public get senses() {
+        return this.sensesArr; 
+    }
+    
+    noticePlayer() {
+        this.stopActivity();
     }
 }
