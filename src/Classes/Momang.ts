@@ -1,7 +1,8 @@
 import ActivityOwner from "./ActivityOwner.js";
+import Debugger from "./Debugger.js";
 import type MomangActivity from "./MomangActivity.js";
 
-class Momang extends ActivityOwner <MomangActivity> {
+export default class Momang extends ActivityOwner <MomangActivity> {
     seconds = 0;
     currentActivity: string | null = null;
     activityTimeout: number = 0;
@@ -15,11 +16,11 @@ class Momang extends ActivityOwner <MomangActivity> {
                 this.currentActivity = activityName;
                 this.activityTimeout = setInterval(() => {
                     this.seconds++;
-
+                    Debugger.log("momangCurrentTimer", this.seconds);
                     if (this.seconds >= activity.givenDuration) {
                         this.stopActivity();
                     }
-                }, 1000);        
+                }, 1000);   
             }        
         })         
     }

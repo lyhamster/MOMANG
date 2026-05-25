@@ -1,4 +1,5 @@
 import ActivityOwner from "./ActivityOwner.js";
+import Debugger from "./Debugger.js";
 import type PlayerActivity from "./PlayerActivity.js";
 
 export default class Player extends ActivityOwner <PlayerActivity> {
@@ -17,12 +18,16 @@ export default class Player extends ActivityOwner <PlayerActivity> {
         this.listActivities.forEach((activity) => {
             if (activity.label === activityName) {
                 this.currentActivity = activityName;
+                Debugger.log("playerCurrentActivity", activityName);
+                Debugger.log("playerSenses", activity.sensesArr);
+                Debugger.log("playerFullDuration", activity.fixedDuration);
                 this.activityTimeout = setInterval(() => {
                     this.seconds++;
-
-                    if (this.seconds >= activity.fixedDuration) {
+                    Debugger.log("playerCurrentTimer", this.seconds)
+                    if (this.seconds === activity.fixedDuration) {
                         this.stopActivity();
                         this.playerScore += activity.score;
+                        Debugger.log("playerScore", this.playerScore);
                     } 
                 }, this.activityTick);
             }
@@ -46,10 +51,12 @@ export default class Player extends ActivityOwner <PlayerActivity> {
 
     getCaught(): void {
         if (this.health === 0) {
+            Debugger.log("playerHealth", this.health);
             this.stopActivity();
             return;
         }
         this.health--;
+        Debugger.log("playerHealth", this.health);
         this.stopActivity(); 
     }
 }
