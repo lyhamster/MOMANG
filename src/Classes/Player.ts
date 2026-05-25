@@ -1,12 +1,13 @@
 import ActivityOwner from "./ActivityOwner.js";
 import type PlayerActivity from "./PlayerActivity.js";
 
-class Player extends ActivityOwner <PlayerActivity> {
+export default class Player extends ActivityOwner <PlayerActivity> {
     seconds = 0;
     playerScore = 0;
     health = 3;
     currentActivity: string | null = null;
     activityTimeout: number = 0;
+    activityTick: number = 1000;
 
     constructor(listActivities: PlayerActivity[]) {
         super(listActivities);
@@ -23,12 +24,12 @@ class Player extends ActivityOwner <PlayerActivity> {
                         this.stopActivity();
                         this.playerScore += activity.score;
                     } 
-                }, 1000)
+                }, this.activityTick);
             }
         })
     }
 
-    stopActivity (): void {
+    pauseActivity (): void {
         if (this.currentActivity) {
             clearInterval(this.activityTimeout); 
             this.currentActivity = null;
