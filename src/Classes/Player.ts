@@ -34,8 +34,14 @@ export default class Player extends ActivityOwner <PlayerActivity> {
             clearInterval(this.activityTimeout); 
             this.currentActivity = null;
             this.activityTimeout = 0;
-            this.seconds = 0;
         } 
+    }
+
+    stopActivity (): void {
+        clearInterval(this.activityTimeout); 
+        this.currentActivity = null;
+        this.activityTimeout = 0;
+        this.seconds = 0;
     }
 
     getCaught(): void {
