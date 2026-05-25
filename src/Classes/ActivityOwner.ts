@@ -5,5 +5,5 @@ export default abstract class ActivityOwner <T> {
         this.listActivities = listActivities;
     }
 
-    abstract doActivity(activity: string): void;
+    abstract doActivity(activity: string, onActivityEnd: Function): void;
 }

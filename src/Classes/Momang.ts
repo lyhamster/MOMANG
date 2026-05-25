@@ -6,11 +6,12 @@ export default class Momang extends ActivityOwner <MomangActivity> {
     seconds = 0;
     currentActivity: string | null = null;
     activityTimeout: number = 0;
+
     constructor(listActivities: MomangActivity[]) {
         super(listActivities);
     }
 
-    doActivity(activityName: string): void {
+    doActivity(activityName: string, onActivityEnd: Function): void {
         this.listActivities.forEach((activity) => {
             if (activity.label === activityName) {
                 this.currentActivity = activityName;
@@ -19,6 +20,7 @@ export default class Momang extends ActivityOwner <MomangActivity> {
                     Debugger.log("momangCurrentTimer", this.seconds);
                     if (this.seconds >= activity.givenDuration) {
                         this.stopActivity();
+                        onActivityEnd()
                     }
                 }, 1000);   
             }        
