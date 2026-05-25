@@ -8,12 +8,11 @@ import SensesComparator from "./SensesComparator.js";
 export default class Game {
     player: Player;
     momang: Momang;
-    seconds = 0;
-    momangTimeout: number = 0;
+
     randomDurationActivity: number = 0;
     formerActivity: string | null = null;
-
     momangCurrentSenses: any;
+
     constructor(player: Player, momang: Momang) {
         this.player = player;
         this.momang = momang;
@@ -34,20 +33,11 @@ export default class Game {
         momangObject.changeDuration(this.randomDurationActivity);
         Debugger.log("momangCurrentActivity", momangObject.label);    
         Debugger.log("momangFullDuration", momangObject.givenDuration);    
-        this.momang.doActivity(momangObject.label);
+        this.momang.doActivity(momangObject.label, () => {
+            this.startGame()
+        });
         this.momangCurrentSenses = momangObject.sensesArr;
         Debugger.log("momangSenses", momangObject.sensesArr);
-        this.gamingPhase();
-    }
-
-    gamingPhase() {
-        this.momangTimeout = setInterval (() => {
-            this.seconds++;
-            if (this.seconds === this.randomDurationActivity) {
-                this.stopActivityGamingPhase();
-                this.startGame();
-            }
-        }, 1000);
     }
 
     playerPlay(): void {
@@ -66,9 +56,9 @@ export default class Game {
                     this.player.doActivity(eventTarget.className);  
                     return;
                 } 
-                let playerCurrentSenses: string[] = [];
-
                 this.player.doActivity(eventTarget.className);
+
+                let playerCurrentSenses: string[] = [];
                 this.player.listActivities.forEach((labelActivity) => {
                     if (labelActivity.label === this.player.currentActivity) {
                         playerCurrentSenses = labelActivity.sensesArr;
@@ -79,12 +69,6 @@ export default class Game {
                 console.log(test)
             }
         })
-    }
-
-    stopActivityGamingPhase(): void {
-        clearInterval(this.momangTimeout); 
-        this.momangTimeout = 0;
-        this.seconds = 0;
     }
 }
 
