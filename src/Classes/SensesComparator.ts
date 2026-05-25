@@ -1,7 +1,7 @@
 export default class SensesComparator{
-    sensesA: [];
-    sensesB: [];
-    constructor(sensesA: [],  sensesB: []) {
+    sensesA: string[];
+    sensesB: string[];
+    constructor(sensesA: string[],  sensesB: string[]) {
         this.sensesA = sensesA;
         this.sensesB = sensesB;
     }
