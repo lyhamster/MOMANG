@@ -7,7 +7,7 @@ export default class Player extends ActivityOwner <PlayerActivity> {
     playerScore = 0;
     health = 3;
     currentActivity: string | null = null;
-    activityTimeout: number = 0;
+    activityCurrentTimeout: number = 0;
     activityTick: number = 1000;
 
     constructor(listActivities: PlayerActivity[]) {
