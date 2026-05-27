@@ -14,19 +14,15 @@ export default class Game {
         this.momang = momang;
     }
 
-    async startGame(): Promise<void> {
-        const totalNbActivities = this.momang.listActivities.length; 
-        const randomIndexActivity = Math.floor(Math.random() * totalNbActivities);
-          
-        this.randomDurationActivity = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
-        let currentIndexActivity = this.randomDurationActivity;
+    async startRandomMomangActivity(): Promise<void> {
+        const momangActivitiesLs = this.momang.listActivities.length; 
+        const momangRandomIndexActivity = Math.floor(Math.random() * momangActivitiesLs);
+        
+        const randomDurationActivity = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
+        
+        const momangObject = this.momang.listActivities[momangRandomIndexActivity];
+        momangObject.changeDuration(randomDurationActivity);
 
-        if (this.randomDurationActivity === currentIndexActivity) {
-            Math.floor(Math.random() * (20 - 10 + 1)) + 10;
-        }
-
-        const momangObject = this.momang.listActivities[randomIndexActivity];
-        momangObject.changeDuration(this.randomDurationActivity);
         Debugger.log("momangCurrentActivity", momangObject.label);    
         Debugger.log("momangFullDuration", momangObject.givenDuration);    
         this.momang.doActivity(momangObject.label, () => {
@@ -36,8 +32,8 @@ export default class Game {
         Debugger.log("momangSenses", momangObject.sensesArr);
     }
 
-    playerPlay(): void {
-        this.startGame();
+    playingPhase(): void {
+        this.startRandomMomangActivity();
         document.querySelector("body")?.addEventListener("click", (e) => {
             let eventTarget = e.target;
             if (eventTarget instanceof Element) { 
