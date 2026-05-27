@@ -9,10 +9,6 @@ export default class Game {
     player: Player;
     momang: Momang;
 
-    randomDurationActivity: number = 0;
-    formerActivity: string | null = null;
-    momangCurrentSenses: any;
-
     constructor(player: Player, momang: Momang) {
         this.player = player;
         this.momang = momang;
@@ -45,9 +41,7 @@ export default class Game {
         document.querySelector("body")?.addEventListener("click", (e) => {
             let eventTarget = e.target;
             if (eventTarget instanceof Element) { 
-                if (this.player.currentActivity) { 
-                    this.formerActivity = this.player.currentActivity;
-                    Debugger.log("formerActivity", this.formerActivity);
+                if (this.player.currentActivity === eventTarget.className) { 
                     this.player.pauseActivity();
                     return;
                 }

@@ -9,6 +9,8 @@ export default class Player extends ActivityOwner <PlayerActivity> {
     currentActivity: string | null = null;
     activityCurrentTimeout: number = 0;
     activityTick: number = 1000;
+    formerActivity: string | null = null;
+    currentSenses: string[] = [];
 
     constructor(listActivities: PlayerActivity[]) {
         super(listActivities);
@@ -17,6 +19,7 @@ export default class Player extends ActivityOwner <PlayerActivity> {
     doActivity (activityName: string): void {
         this.listActivities.forEach((activity) => {
             if (activity.label === activityName) {
+                this.formerActivity = this.currentActivity;
                 this.currentActivity = activityName;
                 Debugger.log("playerCurrentActivity", activityName);
                 Debugger.log("playerSenses", activity.sensesArr);
@@ -36,7 +39,9 @@ export default class Player extends ActivityOwner <PlayerActivity> {
 
     pauseActivity (): void {
         if (this.currentActivity) {
-            clearInterval(this.activityTimeout); 
+            this.formerActivity = this.currentActivity;
+            Debugger.log("formerActivity", this.formerActivity);
+            clearInterval(this.activityCurrentTimeout); 
             this.currentActivity = null;
             this.activityTimeout = 0;
         } 
