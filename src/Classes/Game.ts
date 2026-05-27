@@ -36,29 +36,35 @@ export default class Game {
         this.startRandomMomangActivity();
         document.querySelector("body")?.addEventListener("click", (e) => {
             let eventTarget = e.target;
+            if (this.player.health === 0) {
+                this.stopGame();
+            }
             if (eventTarget instanceof Element) { 
                 if (this.player.currentActivity === eventTarget.className) { 
                     this.player.pauseActivity();
                     return;
-                }
-                 if (this.formerActivity && this.formerActivity != eventTarget.className) {
-                    this.player.stopActivity();
-                    this.player.doActivity(eventTarget.className);  
-                    return;
                 } 
                 this.player.doActivity(eventTarget.className);
-
-                let playerCurrentSenses: string[] = [];
-                this.player.listActivities.forEach((labelActivity) => {
-                    if (labelActivity.label === this.player.currentActivity) {
-                        playerCurrentSenses = labelActivity.sensesArr;
-                    } 
-                })
-                
-                const test = new SensesComparator(playerCurrentSenses, this.momangCurrentSenses).makeComparison();
-                console.log(test)
+                this.compareSenses();
+                if (this.player.formerActivity && this.player.formerActivity != eventTarget.className) {
+                    this.player.stopActivity();
+                } 
             }
         })
+    }
+
+    compareSenses() {
+        const sensesComparison = new SensesComparator(this.player.getCurrentSenses(), this.momang.getCurrentSenses()).makeComparison();
+        if (!sensesComparison) {
+            this.player.getCaught(() => {
+                this.momang.noticePlayer();
+            });
+        }  
+    }
+
+    stopGame() {
+        this.momang.noticePlayer();
+        this.player.stopActivity();
     }
 }
 
@@ -72,4 +78,4 @@ const kitchen = new MomangActivity("kitchen", ["odorat","vision"], 0)
 
 const lyly = new Player([sport,danse])
 const maman = new Momang([cellphone, wc,kitchen])
-new Game(lyly, maman).playerPlay();
+new Game(lyly, maman).playingPhase();
