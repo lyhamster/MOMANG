@@ -6,7 +6,7 @@ export default class Momang extends ActivityOwner <MomangActivity> {
     seconds = 0;
     currentActivity: string | null = null;
     activityTimeout: number = 0;
-
+    currentSensesArr: string[] = []
     constructor(listActivities: MomangActivity[]) {
         super(listActivities);
     }
@@ -15,6 +15,9 @@ export default class Momang extends ActivityOwner <MomangActivity> {
         this.listActivities.forEach((activity) => {
             if (activity.label === activityName) {
                 this.currentActivity = activityName;
+                this.currentSensesArr = activity.sensesArr;
+                Debugger.log("momangSenses", this.currentSensesArr);
+
                 this.activityTimeout = setInterval(() => {
                     this.seconds++;
                     Debugger.log("momangCurrentTimer", this.seconds);
@@ -28,15 +31,19 @@ export default class Momang extends ActivityOwner <MomangActivity> {
     }
 
     stopActivity(): void {
-        if (this.currentActivity) {
-            clearInterval(this.activityTimeout); 
-            this.currentActivity = null;
-            this.activityTimeout = 0;
-            this.seconds = 0;
-        }
+        // if (this.currentActivity) {
+        clearInterval(this.activityTimeout); 
+        this.currentActivity = null;
+        this.activityTimeout = 0;
+        this.seconds = 0;
+        // }
     }
 
     noticePlayer() {
         this.stopActivity();
+    }
+
+    getCurrentSenses() {
+        return this.currentSensesArr;
     }
 }

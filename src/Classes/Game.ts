@@ -26,10 +26,8 @@ export default class Game {
         Debugger.log("momangCurrentActivity", momangObject.label);    
         Debugger.log("momangFullDuration", momangObject.givenDuration);    
         this.momang.doActivity(momangObject.label, () => {
-            this.startGame()
+            this.startRandomMomangActivity();
         });
-        this.momangCurrentSenses = momangObject.sensesArr;
-        Debugger.log("momangSenses", momangObject.sensesArr);
     }
 
     playingPhase(): void {
