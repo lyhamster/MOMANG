@@ -17,14 +17,17 @@ export default class Player extends ActivityOwner <PlayerActivity> {
     }
 
     doActivity (activityName: string): void {
+        Debugger.log("playerHealth", this.health);
+
         this.listActivities.forEach((activity) => {
             if (activity.label === activityName) {
                 this.formerActivity = this.currentActivity;
                 this.currentActivity = activityName;
+                this.currentSenses = activity.sensesArr;
                 Debugger.log("playerCurrentActivity", activityName);
                 Debugger.log("playerSenses", activity.sensesArr);
                 Debugger.log("playerFullDuration", activity.fixedDuration);
-                this.activityTimeout = setInterval(() => {
+                this.activityCurrentTimeout = setInterval(() => {
                     this.seconds++;
                     Debugger.log("playerCurrentTimer", this.seconds)
                     if (this.seconds === activity.fixedDuration) {
@@ -34,6 +37,7 @@ export default class Player extends ActivityOwner <PlayerActivity> {
                     } 
                 }, this.activityTick);
             }
+            return;
         })
     }
 
@@ -43,25 +47,33 @@ export default class Player extends ActivityOwner <PlayerActivity> {
             Debugger.log("formerActivity", this.formerActivity);
             clearInterval(this.activityCurrentTimeout); 
             this.currentActivity = null;
-            this.activityTimeout = 0;
+            this.activityCurrentTimeout = 0;
         } 
     }
 
     stopActivity (): void {
-        clearInterval(this.activityTimeout); 
+        clearInterval(this.activityCurrentTimeout); 
         this.currentActivity = null;
-        this.activityTimeout = 0;
+        this.activityCurrentTimeout = 0;
         this.seconds = 0;
     }
 
-    getCaught(): void {
+    getCaught(onEndGame: Function): void {
         if (this.health === 0) {
-            Debugger.log("playerHealth", this.health);
+        console.log(this.health)
+
+            console.log("Hello")
+            onEndGame();
             this.stopActivity();
             return;
+        } else {
+            this.health--;
+            this.stopActivity(); 
+            Debugger.log("playerHealth", this.health);   
         }
-        this.health--;
-        Debugger.log("playerHealth", this.health);
-        this.stopActivity(); 
+    }
+
+    getCurrentSenses() {
+        return this.currentSenses;
     }
 }
