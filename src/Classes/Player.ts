@@ -58,22 +58,13 @@ export default class Player extends ActivityOwner <PlayerActivity> {
         this.seconds = 0;
     }
 
-    getCaught(onEndGame: Function): void {
+    getCaught(): void {
         if (this.health === 0) {
-        console.log(this.health)
-
-            console.log("Hello")
-            onEndGame();
             this.stopActivity();
             return;
-        } else {
-            this.health--;
-            this.stopActivity(); 
-            Debugger.log("playerHealth", this.health);   
         }
-    }
-
-    getCurrentSenses() {
-        return this.currentSenses;
+        this.health--;
+        this.stopActivity(); 
+        Debugger.log("playerHealth", this.health);   
     }
 }
