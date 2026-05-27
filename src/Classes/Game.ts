@@ -34,34 +34,35 @@ export default class Game {
         this.startRandomMomangActivity();
         document.querySelector("body")?.addEventListener("click", (e) => {
             let eventTarget = e.target;
+            this.handlePlayerActivity(eventTarget);
+        
+            const sensesComparison = new SensesComparator(this.player.currentSenses, this.momang.currentSensesArr).makeComparison();
+             if (!sensesComparison) {
+                this.player.getCaught();
+            } 
+
             if (this.player.health === 0) {
                 this.stopGame();
-            }
-            if (eventTarget instanceof Element) { 
-                if (this.player.currentActivity === eventTarget.className) { 
-                    this.player.pauseActivity();
-                    return;
-                } 
-                this.player.doActivity(eventTarget.className);
-                this.compareSenses();
-                if (this.player.formerActivity && this.player.formerActivity != eventTarget.className) {
-                    this.player.stopActivity();
-                } 
+                return;
             }
         })
     }
 
-    compareSenses() {
-        const sensesComparison = new SensesComparator(this.player.getCurrentSenses(), this.momang.getCurrentSenses()).makeComparison();
-        if (!sensesComparison) {
-            this.player.getCaught(() => {
-                this.momang.noticePlayer();
-            });
-        }  
+    handlePlayerActivity<T> (targetElement: T) {
+        if (targetElement instanceof Element) { 
+            if (this.player.currentActivity === targetElement.className) { 
+                this.player.pauseActivity();
+                return;
+            } 
+            this.player.doActivity(targetElement.className);
+            if (this.player.formerActivity && this.player.formerActivity != targetElement.className) {
+                this.player.stopActivity();
+            } 
+        }
     }
 
     stopGame() {
-        this.momang.noticePlayer();
+        this.momang.stopActivity();
         this.player.stopActivity();
     }
 }
