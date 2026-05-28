@@ -1,3 +1,5 @@
+import type ActivityOwner from "./ActivityOwner.js";
+import CommonActivity from "./CommonActivity.js";
 import Debugger from "./Debugger.js";
 import Momang from "./Momang.js";
 import MomangActivity from "./MomangActivity.js";
@@ -33,14 +35,7 @@ export default class Game {
     playingPhase(): void {
         this.startRandomMomangActivity();
         document.querySelector("body")?.addEventListener("click", (e) => {
-            let eventTarget = e.target;
-            this.handlePlayerActivity(eventTarget);
-        
-            const sensesComparison = new SensesComparator(this.player.currentSenses, this.momang.currentSensesArr).makeComparison();
-             if (!sensesComparison) {
-                this.player.getCaught();
-            } 
-
+            this.handlePlayerActivity(e);
             if (this.player.health === 0) {
                 this.stopGame();
                 return;
@@ -48,14 +43,23 @@ export default class Game {
         })
     }
 
-    handlePlayerActivity<T> (targetElement: T) {
-        if (targetElement instanceof Element) { 
-            if (this.player.currentActivity === targetElement.className) { 
+    handlePlayerActivity (targetElement: PointerEvent) {
+        let eventTarget = targetElement.target;
+        if (eventTarget instanceof Element) { 
+            if (this.player.currentActivity === eventTarget.className) { 
                 this.player.pauseActivity();
                 return;
             } 
-            this.player.doActivity(targetElement.className);
-            if (this.player.formerActivity && this.player.formerActivity != targetElement.className) {
+            this.player.doActivity(eventTarget.className);
+
+            const momangSensesArr = this.momang.getCurrentActivity().sensesArr;
+            const playerSensesArr = this.player.getCurrentActivity().sensesArr;
+
+            const sensesComparison = new SensesComparator(momangSensesArr, playerSensesArr).makeComparison();
+            if (!sensesComparison) {
+                this.player.getCaught();
+            } 
+            if (this.player.formerActivity && this.player.formerActivity != eventTarget.className) {
                 this.player.stopActivity();
             } 
         }
