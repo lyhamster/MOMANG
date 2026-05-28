@@ -1,16 +1,10 @@
 import ActivityOwner from "./ActivityOwner.js";
 import Debugger from "./Debugger.js";
-import type PlayerActivity from "./PlayerActivity.js";
+import PlayerActivity from "./PlayerActivity.js";
 
 export default class Player extends ActivityOwner <PlayerActivity> {
-    seconds = 0;
     playerScore = 0;
     health = 3;
-    currentActivity: string | null = null;
-    activityCurrentTimeout: number = 0;
-    activityTick: number = 1000;
-    formerActivity: string | null = null;
-    currentSenses: string[] = [];
 
     constructor(listActivities: PlayerActivity[]) {
         super(listActivities);
@@ -23,11 +17,9 @@ export default class Player extends ActivityOwner <PlayerActivity> {
             if (activity.label === activityName) {
                 this.formerActivity = this.currentActivity;
                 this.currentActivity = activityName;
-                this.currentSenses = activity.sensesArr;
                 Debugger.log("playerCurrentActivity", activityName);
-                Debugger.log("playerSenses", activity.sensesArr);
                 Debugger.log("playerFullDuration", activity.fixedDuration);
-                this.activityCurrentTimeout = setInterval(() => {
+                this.currentActivityTimeout = setInterval(() => {
                     this.seconds++;
                     Debugger.log("playerCurrentTimer", this.seconds)
                     if (this.seconds === activity.fixedDuration) {
@@ -45,16 +37,16 @@ export default class Player extends ActivityOwner <PlayerActivity> {
         if (this.currentActivity) {
             this.formerActivity = this.currentActivity;
             Debugger.log("formerActivity", this.formerActivity);
-            clearInterval(this.activityCurrentTimeout); 
+            clearInterval(this.currentActivityTimeout); 
             this.currentActivity = null;
-            this.activityCurrentTimeout = 0;
+            this.currentActivityTimeout = 0;
         } 
     }
 
     stopActivity (): void {
-        clearInterval(this.activityCurrentTimeout); 
+        clearInterval(this.currentActivityTimeout); 
         this.currentActivity = null;
-        this.activityCurrentTimeout = 0;
+        this.currentActivityTimeout = 0;
         this.seconds = 0;
     }
 
