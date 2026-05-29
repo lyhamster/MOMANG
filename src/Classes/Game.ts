@@ -1,5 +1,3 @@
-import type ActivityOwner from "./ActivityOwner.js";
-import CommonActivity from "./CommonActivity.js";
 import Debugger from "./Debugger.js";
 import Momang from "./Momang.js";
 import MomangActivity from "./MomangActivity.js";

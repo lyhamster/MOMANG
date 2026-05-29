@@ -22,11 +22,4 @@ export default class Momang extends ActivityOwner <MomangActivity> {
             }        
         })         
     }
-
-    stopActivity(): void {
-        clearInterval(this.currentActivityTimeout); 
-        this.currentActivity = null;
-        this.currentActivityTimeout = 0;
-        this.seconds = 0;
-    }
 }

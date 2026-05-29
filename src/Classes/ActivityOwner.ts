@@ -13,7 +13,15 @@ export default abstract class ActivityOwner <T extends CommonActivity> {
     }
 
     abstract doActivity(activity: string, onActivityEnd: Function): void;
+
     getCurrentActivity(): T {
         return this.listActivities.find((activity) => activity.label ===  this.currentActivity) as T;
+    }
+
+    stopActivity(): void {
+        clearInterval(this.currentActivityTimeout);
+        this.currentActivity = null;
+        this.currentActivityTimeout = 0;
+        this.seconds = 0;
     }
 }
