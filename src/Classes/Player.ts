@@ -1,39 +1,45 @@
 import ActivityOwner from "./ActivityOwner.js";
-import type PlayerActivity from "./PlayerActivity.js";
+import Debugger from "./Debugger.js";
+import PlayerActivity from "./PlayerActivity.js";
 
-class Player extends ActivityOwner <PlayerActivity> {
-    seconds = 0;
+export default class Player extends ActivityOwner <PlayerActivity> {
     playerScore = 0;
     health = 3;
-    currentActivity: string | null = null;
-    activityTimeout: number = 0;
 
     constructor(listActivities: PlayerActivity[]) {
         super(listActivities);
     }
 
     doActivity (activityName: string): void {
+        Debugger.log("playerHealth", this.health);
+
         this.listActivities.forEach((activity) => {
             if (activity.label === activityName) {
+                this.formerActivity = this.currentActivity;
                 this.currentActivity = activityName;
-                this.activityTimeout = setInterval(() => {
+                Debugger.log("playerCurrentActivity", activityName);
+                Debugger.log("playerFullDuration", activity.fixedDuration);
+                this.currentActivityTimeout = setInterval(() => {
                     this.seconds++;
-
-                    if (this.seconds >= activity.fixedDuration) {
+                    Debugger.log("playerCurrentTimer", this.seconds)
+                    if (this.seconds === activity.fixedDuration) {
                         this.stopActivity();
                         this.playerScore += activity.score;
+                        Debugger.log("playerScore", this.playerScore);
                     } 
-                }, 1000)
+                }, this.activityTick);
             }
+            return;
         })
     }
 
-    stopActivity (): void {
+    pauseActivity (): void {
         if (this.currentActivity) {
-            clearInterval(this.activityTimeout); 
+            this.formerActivity = this.currentActivity;
+            Debugger.log("formerActivity", this.formerActivity);
+            clearInterval(this.currentActivityTimeout); 
             this.currentActivity = null;
-            this.activityTimeout = 0;
-            this.seconds = 0;
+            this.currentActivityTimeout = 0;
         } 
     }
 
@@ -44,5 +50,6 @@ class Player extends ActivityOwner <PlayerActivity> {
         }
         this.health--;
         this.stopActivity(); 
+        Debugger.log("playerHealth", this.health);   
     }
 }

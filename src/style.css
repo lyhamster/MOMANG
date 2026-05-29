@@ -1,0 +1,14 @@
+.sport, .danse, .caca {
+    border: 1px solid black;
+    padding: 10px;
+    font-weight: bold;
+    box-shadow: 0px 2px black;
+    width: 5%;
+    border-radius: 5px;
+}
+
+.activitiesWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
