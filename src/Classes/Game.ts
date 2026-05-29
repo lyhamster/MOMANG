@@ -43,8 +43,8 @@ export default class Game {
         })
     }
 
-    handlePlayerActivity (targetElement: PointerEvent) {
-        let eventTarget = targetElement.target;
+    handlePlayerActivity (e: PointerEvent) {
+        let eventTarget = e.target;
         if (eventTarget instanceof Element) { 
             if (this.player.currentActivity === eventTarget.className) { 
                 this.player.pauseActivity();
