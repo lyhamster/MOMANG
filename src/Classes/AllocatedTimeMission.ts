@@ -8,7 +8,7 @@ export default class AllocatedTimeMission extends Mission {
     }
 
     displayInstruction() {
-        return `${this.missionLabel} dans les ${this.completionCriteria} prochaines secondes.`
+        return `${this.missionLabel} dans les ${this.completionCriteria} prochaines secondes.`;
     }
 
     override initializeCompletion(onEnd: Function) {
