@@ -36,21 +36,11 @@ export default class MissionManager {
                 break;
             }
         })
-        this.newInstruction();
     }
 
-    newInstruction() {
-        setInterval(() => {
-            const crashtest = this.listMissions[this.randomIndexNb()];
-            // console.log(this.arrMission)
-            if (this.arrMission.length < 3) {
-                const missionParentElement = document.querySelector(".displayMission");
-                const instruction = document.createElement("p"); 
-                instruction.textContent = crashtest.displayInstruction();
-                missionParentElement?.appendChild(instruction);
-                this.arrMission.splice(this.allocatedTimeIndex, 0, crashtest)                
-            }
-        }, 1000);
+    handleCompletedMission(selectedElement: string, labelMissionLabel: string) {
+        console.log(this.listMissions)
+        this.removeMissionAndSaveIndex(selectedElement, labelMissionLabel);                  
     }
 
     randomIndexNb() {
