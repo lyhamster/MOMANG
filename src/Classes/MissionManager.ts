@@ -17,9 +17,9 @@ export default class MissionManager {
 
         this.arrMission.forEach((mission) => {
             const missionParentElement = document.querySelector(".displayMission");
-            const instruction = document.createElement("p"); 
-            instruction.textContent = mission.displayInstruction();
-            missionParentElement?.appendChild(instruction);
+            const instructionElement = document.createElement("p"); 
+            instructionElement.textContent = mission.displayInstruction();
+            missionParentElement?.appendChild(instructionElement); 
 
             switch(mission.type) {
                 case "allocatedTimeMission": 
