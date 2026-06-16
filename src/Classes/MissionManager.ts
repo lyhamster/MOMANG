@@ -9,36 +9,31 @@ export default class MissionManager {
     }
 
     displayMissions() {
-        const firstMission = this.listMissions[this.randomIndexNb()];
-        const secondMission = this.listMissions[this.randomIndexNb()];
-        const thirdMission = this.listMissions[this.randomIndexNb()];
+        do {
+            this.arrMission.push(this.listMissions[this.randomIndexNb()]);
+        } while (this.arrMission.length < 3);
 
-        this.arrMission.push(firstMission, secondMission, thirdMission);
         this.arrMission.forEach((mission) => {
             const missionParentElement = document.querySelector(".displayMission");
             const instruction = document.createElement("p"); 
             instruction.textContent = mission.displayInstruction();
             missionParentElement?.appendChild(instruction);
 
-            if (mission.type === "allocatedTimeMission") {
-                instruction.classList.add("allocatedTime");
+            switch(mission.type) {
+                case "allocatedTimeMission": 
+                instructionElement.classList.add("allocatedTime");
                 mission.initializeCompletion(() => {
-                    this.removeMission(".allocatedTime");
-                    this.allocatedTimeIndex = this.arrMission.findIndex((labelMission) => labelMission.type === "allocatedTimeMission");
-                    this.arrMission.splice(this.allocatedTimeIndex, 1);
+                    this.removeMissionAndSaveIndex(".allocatedTime", "allocatedTimeMission");
                 })
-            } 
+                break; 
 
-            if (mission.type === "repeatedMission") {
-                instruction.classList.add("repeatedMissionElement");
-                this.allocatedTimeIndex = this.arrMission.findIndex((labelMission) => labelMission.type === "repeatedMission");
-                this.arrMission.splice(this.allocatedTimeIndex, 1);
-            }
+                case "repeatedMission": 
+                instructionElement.classList.add("repeatedMission");
+                break;
 
-            if (mission.type === "alternateMission") {
-                instruction.classList.add("alternatedMissionElement");
-                this.allocatedTimeIndex = this.arrMission.findIndex((labelMission) => labelMission.type === "repeatedMission");
-                this.arrMission.splice(this.allocatedTimeIndex, 1);
+                case "alternateMission": 
+                instructionElement.classList.add("alternatedMissionElement");
+                break;
             }
         })
         this.newInstruction();
