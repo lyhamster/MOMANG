@@ -4,6 +4,8 @@ export default class MissionManager {
     formerRandomIndex: number = 0;
     arrMission: Mission[] = [];
     allocatedTimeIndex: number = 0;
+    tickInstruction: number = 1000;
+
     constructor (listMissions: Mission[]) {
         this.listMissions = listMissions;
     }
@@ -53,8 +55,12 @@ export default class MissionManager {
         return newRandomIndex;
     }
 
-    removeMission(elementLabel: string) {
+    removeMissionAndSaveIndex(elementLabel: string, labelMissionType: string) {
         const elementInstruction = document.querySelector(elementLabel);
         elementInstruction?.remove();
+        console.log(this.arrMission)
+        this.allocatedTimeIndex = this.arrMission.findIndex((element) => element.type  === labelMissionType);
+        console.log(this.allocatedTimeIndex, this.arrMission)
+        this.arrMission.splice(this.allocatedTimeIndex, 1);
     }
 }
