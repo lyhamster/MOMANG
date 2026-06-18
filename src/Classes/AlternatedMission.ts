@@ -17,7 +17,7 @@ export default class AlternateMission extends Mission {
                 this.missionCompleted++;
                 playerScore += this.bonusPoint;
                 onFinish();
-                return;
+                this.resetMission();
             } else {
                 this.missionCompleted = 0;
             }
@@ -32,5 +32,11 @@ export default class AlternateMission extends Mission {
 
     displayMissionProgression() {
         return `${this.missionCompleted} / 2`;
+    }
+
+    resetMission() {
+        this.missionCompleted = 0;
+        this.isValidated = false;
+        return;
     }
 }
