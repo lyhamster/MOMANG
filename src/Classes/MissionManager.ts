@@ -3,7 +3,7 @@ export default class MissionManager {
     listMissions: Mission[];
     formerRandomIndex: number = 0;
     arrMission: Mission[] = [];
-    allocatedTimeIndex: number = 0;
+    arrMissionSavedIndex: number = 0;
     tickInstruction: number = 1000;
 
     constructor (listMissions: Mission[]) {
@@ -38,24 +38,28 @@ export default class MissionManager {
                 break;
             }
         })
+        console.log("display", this.arrMission)
     }
 
 
     handleCompletedMission(selectedElement: string, labelMissionLabel: string) {
         this.removeMissionAndSaveIndex(selectedElement, labelMissionLabel);
-
         const newMission = this.listMissions[this.randomIndexNb()];
-        this.arrMission.splice(this.allocatedTimeIndex, 0, newMission);
-
+        this.arrMission.splice(this.arrMissionSavedIndex, 0, newMission);
+        console.log("spliced array", this.arrMission)
+        
         const missionParentElement = document.querySelector(".displayMission");
         const instructionElement = document.createElement("p"); 
         instructionElement.textContent = newMission.displayInstruction();
-        missionParentElement?.appendChild(instructionElement); 
-        
-        switch (this.arrMission[this.allocatedTimeIndex].type) {
+
+        let arrMissionIndexIncremented = this.arrMissionSavedIndex;
+        arrMissionIndexIncremented++;
+       
+        missionParentElement?.insertBefore(instructionElement, missionParentElement.childNodes[arrMissionIndexIncremented]); 
+        switch (this.arrMission[this.arrMissionSavedIndex].type) {
             case "allocatedTimeMission": 
             instructionElement.classList.add("allocatedTime");
-            this.arrMission[this.allocatedTimeIndex].initializeCompletion(() => {
+            this.arrMission[this.arrMissionSavedIndex].initializeCompletion(() => {
                 this.removeMissionAndSaveIndex(".allocatedTime", "allocatedTimeMission");
             })
             break; 
@@ -83,9 +87,7 @@ export default class MissionManager {
     removeMissionAndSaveIndex(elementLabel: string, labelMissionType: string) {
         const elementInstruction = document.querySelector(elementLabel);
         elementInstruction?.remove();
-        console.log(this.arrMission)
-        this.allocatedTimeIndex = this.arrMission.findIndex((element) => element.type  === labelMissionType);
-        console.log(this.allocatedTimeIndex, this.arrMission)
-        this.arrMission.splice(this.allocatedTimeIndex, 1);
+        this.arrMissionSavedIndex = this.arrMission.findIndex((element) => element.type  === labelMissionType);
+        this.arrMission.splice(this.arrMissionSavedIndex, 1);
     }
 }
