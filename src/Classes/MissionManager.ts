@@ -14,31 +14,32 @@ export default class MissionManager {
         do {
             this.arrMission.push(this.listMissions[this.randomIndexNb()]);
         } while (this.arrMission.length < 3);
-
+        
         this.arrMission.forEach((mission) => {
             const missionParentElement = document.querySelector(".displayMission");
             const instructionElement = document.createElement("p"); 
             instructionElement.textContent = mission.displayInstruction();
             missionParentElement?.appendChild(instructionElement); 
 
-            switch(mission.type) {
-                case "allocatedTimeMission": 
+        switch (mission.type) {
+            case "allocatedTimeMission": 
                 instructionElement.classList.add("allocatedTime");
                 mission.initializeCompletion(() => {
-                    this.removeMissionAndSaveIndex(".allocatedTime", "allocatedTimeMission");
+                    this.handleCompletedMission(".allocatedTime", "allocatedTimeMission");
                 })
                 break; 
 
-                case "repeatedMission": 
+            case "repeatedMission": 
                 instructionElement.classList.add("repeatedMission");
                 break;
 
-                case "alternateMission": 
+            case "alternateMission": 
                 instructionElement.classList.add("alternatedMissionElement");
                 break;
             }
         })
     }
+
 
     handleCompletedMission(selectedElement: string, labelMissionLabel: string) {
         console.log(this.listMissions)
