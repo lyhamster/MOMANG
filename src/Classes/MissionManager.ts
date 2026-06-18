@@ -42,8 +42,32 @@ export default class MissionManager {
 
 
     handleCompletedMission(selectedElement: string, labelMissionLabel: string) {
-        console.log(this.listMissions)
-        this.removeMissionAndSaveIndex(selectedElement, labelMissionLabel);                  
+        this.removeMissionAndSaveIndex(selectedElement, labelMissionLabel);
+
+        const newMission = this.listMissions[this.randomIndexNb()];
+        this.arrMission.splice(this.allocatedTimeIndex, 0, newMission);
+
+        const missionParentElement = document.querySelector(".displayMission");
+        const instructionElement = document.createElement("p"); 
+        instructionElement.textContent = newMission.displayInstruction();
+        missionParentElement?.appendChild(instructionElement); 
+        
+        switch (this.arrMission[this.allocatedTimeIndex].type) {
+            case "allocatedTimeMission": 
+            instructionElement.classList.add("allocatedTime");
+            this.arrMission[this.allocatedTimeIndex].initializeCompletion(() => {
+                this.removeMissionAndSaveIndex(".allocatedTime", "allocatedTimeMission");
+            })
+            break; 
+
+            case "repeatedMission": 
+            instructionElement.classList.add("repeatedMission");
+            break;
+
+            case "alternateMission": 
+            instructionElement.classList.add("alternatedMissionElement");
+            break;
+        }
     }
 
     randomIndexNb() {
