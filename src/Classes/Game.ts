@@ -28,10 +28,8 @@ export default class Game {
         
         const momangObject = this.momang.listActivities[momangRandomIndexActivity];
         momangObject.changeDuration(randomDurationActivity);
-
-        Debugger.log("momangCurrentActivity", momangObject.label);    
-        Debugger.log("momangFullDuration", momangObject.givenDuration);    
-       
+        // Debugger.log("momangCurrentActivity", momangObject.label);    
+        // Debugger.log("momangFullDuration", momangObject.givenDuration);    
         this.momang.doActivity(momangObject.label, () => {
             this.startRandomMomangActivity();
         });
@@ -58,29 +56,30 @@ export default class Game {
             }
             let playerCurrentActivity: string | null; 
             this.player.doActivity(eventTarget.className, () => {
-                this.mission.listMissions.forEach((missionTest) => {
-                    if (missionTest.type === "repeatedMission") {
-                        missionTest.checkCompletion(playerCurrentActivity, this.player.score, (() => { 
-                            // console.log(this.mission.removeMission(".repeatedMissionElement"))
-                            this.mission.removeMission(".repeatedMissionElement");
-                            // this.mission.newInstruction();
-                            console.log(this.mission.newInstruction)
-                        }))
-                    }
+                const uniqueMission = this.mission.arrMission.filter((value, index, self) => {
+                    return self.indexOf(value) === index;
+                })
+                uniqueMission.forEach((mission) => {
+                    switch (mission.type) {
+                        case "allocatedTimeMission": 
+                        mission.checkCompletion(playerCurrentActivity, this.player.score, () => {
+                            this.mission.handleCompletedMission(".allocatedTime", "allocatedTimeMission");
+                        })
+                        break;
 
-                    if (missionTest.type === "allocatedTimeMission") {
-                        missionTest.checkCompletion(playerCurrentActivity, this.player.score, (() => { 
-                            this.mission.removeMission(".allocatedTime");
-                        }))    
-                    }
+                        case "alternateMission": 
+                        mission.checkCompletion(playerCurrentActivity, this.player.score, () => {
+                            this.mission.handleCompletedMission(".alternatedMissionElement", "alternateMission");    
+                        })
+                        break;
 
-                    if (missionTest.type === "alternateMission") {
-                        missionTest.checkCompletion(playerCurrentActivity, this.player.score, (() => { 
-                            this.mission.removeMission(".alternatedMissionElement");
-                        }))    
+                        case "repeatedMission": 
+                        mission.checkCompletion(playerCurrentActivity, this.player.score, () => {
+                            this.mission.handleCompletedMission(".repeatedMission", "repeatedMission");    
+                        })
+                        break;
                     }
-                });
-                 
+                })
             });
             playerCurrentActivity = this.player.currentActivity;
             const momangSensesArr = this.momang.getCurrentActivity().sensesArr;
@@ -112,6 +111,6 @@ const maman = new Momang([cellphone, wc,kitchen]);
 
 const doYoga = new AllocatedTimeMission("Fais du yoga", 20, 100, "sport");
 const doBreakDanse = new RepeatedMission("fais du break danse", 4, 100, "danse");
-const watchandSport = new AlternateMission ("regarde un reel", "fais du yoga", 100, {"regarde un reel": "ordi", "fais du yoga": "sport"})
+const watchandSport = new AlternateMission ("regarde un reel", "fais du yoga", 100, {"regarde un reel": "ordi", "fais du yoga": "sport"});
 const missions = new MissionManager([doYoga, doBreakDanse, watchandSport]);
 new Game(lyly, maman, missions).playingPhase();
