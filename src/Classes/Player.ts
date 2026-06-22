@@ -10,7 +10,7 @@ export default class Player extends ActivityOwner <PlayerActivity> {
         super(listActivities);
     }
 
-    doActivity (activityName: string, test: Function): void {
+    doActivity (activityName: string, onMission: Function): void {
         Debugger.log("playerHealth", this.health);
 
         this.listActivities.forEach((activity) => {
@@ -26,7 +26,7 @@ export default class Player extends ActivityOwner <PlayerActivity> {
                         this.stopActivity();
                         this.score += activity.score;
                         Debugger.log("playerScore", this.score);
-                        test();  
+                        onMission();  
                     } 
                 }, this.activityTick);
             }

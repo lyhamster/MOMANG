@@ -9,6 +9,6 @@ export default class MomangActivity extends CommonActivity  {
     }
 
     changeDuration(ms: number) {
-        this.givenDuration = ms ;
+        this.givenDuration = ms;
     }
 }

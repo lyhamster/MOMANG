@@ -3,6 +3,7 @@ import Mission from "./Mission";
 export default class AlternateMission extends Mission {
     missionCompleted = 0;
     isValidated = false;
+    
     constructor (missionLabel: string, completionCriteria: string, bonusPoint: number, activityRelated: object) {
         super(missionLabel, completionCriteria, "alternateMission", bonusPoint, activityRelated);
     } 
@@ -11,12 +12,12 @@ export default class AlternateMission extends Mission {
         return `${this.missionLabel} puis ${this.completionCriteria} à la suite.`;
     }
 
-    checkCompletion(currentActivity: string | null, playerScore: number, onFinish: Function) {
+    checkCompletion(currentActivity: string | null, playerScore: number, onCompletion: Function) {
         if (this.missionCompleted === 1) {
             if (this.activityRelated[this.completionCriteria as keyof typeof this.activityRelated] === currentActivity) {
                 this.missionCompleted++;
                 playerScore += this.bonusPoint;
-                onFinish();
+                onCompletion();
                 this.resetMission();
             } else {
                 this.missionCompleted = 0;
