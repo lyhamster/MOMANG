@@ -2,7 +2,9 @@ import Mission from "./Mission";
 
 export default class AllocatedTimeMission extends Mission {
     missionTick = 1000;
-    chrono =  0;
+    timer =  0;
+    completionCriteriaCount: string | number = 0;
+
     constructor (missionLabel: string, completionCriteria: number, bonusPoint: number, activityRelated: string) {
         super(missionLabel, completionCriteria, "allocatedTimeMission", bonusPoint, activityRelated);
     }
@@ -11,29 +13,30 @@ export default class AllocatedTimeMission extends Mission {
         return `${this.missionLabel} dans les ${this.completionCriteria} prochaines secondes.`;
     }
 
-    override initializeCompletion(onEnd: Function) {
-        this.chrono = setInterval(() => {
-            if (typeof this.completionCriteria === "number") {
-                this.completionCriteria--;
-                if (this.completionCriteria === 0) {
-                    onEnd();
+    override initializeCompletion(onCompletion: Function) {
+        this.completionCriteriaCount = this.completionCriteria;
+        this.timer = setInterval(() => {
+            if (typeof this.completionCriteriaCount === "number") {
+                this.completionCriteriaCount--;
+                if (this.completionCriteriaCount === 0) {
                     this.resetMission();
+                    onCompletion();
                 }
             }
         }, this.missionTick);
     }
 
-    checkCompletion(currentActivity: string | null, playerScore: number, onFinish: Function) {
+    checkCompletion(currentActivity: string | null, playerScore: number, onCompletion: Function) {
         if (currentActivity === this.activityRelated) {
             playerScore += this.bonusPoint;
-            onFinish();
+            onCompletion();
             this.resetMission();
         }
     }
 
     resetMission() {
-        clearInterval(this.chrono);
-        this.chrono = 0;
+        clearInterval(this.timer);
+        this.timer = 0;
         return;
     }
 
