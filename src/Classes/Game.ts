@@ -56,9 +56,7 @@ export default class Game {
             }
             let playerCurrentActivity: string | null; 
             this.player.doActivity(eventTarget.className, () => {
-                const uniqueMission = this.mission.arrMission.filter((value, index, self) => {
-                    return self.indexOf(value) === index;
-                })
+                const uniqueMission = [...new Set(this.mission.arrMission)];
                 uniqueMission.forEach((mission) => {
                     switch (mission.type) {
                         case "allocatedTimeMission": 
