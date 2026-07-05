@@ -3,14 +3,14 @@ import Debugger from "./Debugger.js";
 import PlayerActivity from "./PlayerActivity.js";
 
 export default class Player extends ActivityOwner <PlayerActivity> {
-    playerScore = 0;
+    score = 0;
     health = 3;
-
+    
     constructor(listActivities: PlayerActivity[]) {
         super(listActivities);
     }
 
-    doActivity (activityName: string): void {
+    doActivity (activityName: string, onMission: Function): void {
         Debugger.log("playerHealth", this.health);
 
         this.listActivities.forEach((activity) => {
@@ -24,8 +24,9 @@ export default class Player extends ActivityOwner <PlayerActivity> {
                     Debugger.log("playerCurrentTimer", this.seconds)
                     if (this.seconds === activity.fixedDuration) {
                         this.stopActivity();
-                        this.playerScore += activity.score;
-                        Debugger.log("playerScore", this.playerScore);
+                        this.score += activity.score;
+                        Debugger.log("playerScore", this.score);
+                        onMission();  
                     } 
                 }, this.activityTick);
             }
