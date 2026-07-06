@@ -13,15 +13,16 @@ export default class MissionManager {
 
     displayMissions() {
         do {
-            this.arrMission.push(this.listMissions[this.randomIndexNb()]);
+            this.arrMission.push(this.listMissions[this.generateRandomIndexNb()]);
         } while (this.arrMission.length < 3);
         
         this.arrMission.forEach((mission) => {
             const instructionElement = document.createElement("p"); 
-            instructionElement.textContent = mission.displayInstruction();
+            instructionElement.textContent = mission.getInstruction();
+
             this.displayMissionElement?.appendChild(instructionElement); 
 
-            this.createMissionClassName(mission, instructionElement);
+            this.addMissionClassName(mission, instructionElement);
         });
     }
 
@@ -40,7 +41,7 @@ export default class MissionManager {
         this.createMissionClassName(this.arrMission[this.arrMissionSavedIndex], instructionElement);
     }
 
-    randomIndexNb() {
+    generateRandomIndexNb() {
         const listMissions = this.listMissions.length; 
         let newRandomIndex;
         do {
@@ -57,7 +58,7 @@ export default class MissionManager {
         this.arrMission.splice(this.arrMissionSavedIndex, 1);
     }
 
-    createMissionClassName(mission: Mission, childElement: HTMLParagraphElement) {
+    addMissionClassName(mission: Mission, childElement: HTMLParagraphElement) {
         switch (mission.type) {
             case "allocatedTimeMission": 
                 childElement.classList.add("allocatedTime");
