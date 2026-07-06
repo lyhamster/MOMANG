@@ -26,19 +26,59 @@ export default class MissionManager {
         });
     }
 
-    handleCompletedMission(selectedElement: string, labelMissionLabel: string) {
-        this.removeMissionAndSaveIndex(selectedElement, labelMissionLabel);
-        const newMission = this.listMissions[this.randomIndexNb()];
-        this.arrMission.splice(this.arrMissionSavedIndex, 0, newMission);
+    handleCompletedMission(labelMissionLabel: string) {
+        this.removeMissionAndSaveIndex(labelMissionLabel);
+        this.replaceMission(this.arrMissionSavedIndex, this.missionTypeSaved);
+    }
+
+    handleTicketCycle() {
+        if (this.arrMissionSavedIndex === this.currentCycleIndex) {
+            this.currentCycleIndex++;
+            console.log(this.currentCycleIndex)
+            if (this.currentCycleIndex === 3) {
+                const ticketsOptionElement = document.querySelector(".ticketsOption");
+                ticketsOptionElement?.querySelectorAll("button").forEach((bttn) => bttn.style.backgroundColor = "green");
+
+                ticketsOptionElement?.addEventListener("click", (e) => {
+                    const bttnElement = e.target;
+                    if (bttnElement instanceof Element) {
+                        if (bttnElement.classList.contains("prout")) {
+                            const missionType = this.arrMission[0].type;
+                            this.arrMission.splice(0, 1);
+                            this.replaceMission(0, missionType);
+                        } else if (bttnElement.classList.contains("index1")) {
+                            const missionType = this.arrMission[1].type;
+                            this.arrMission.splice(1, 1);
+                            this.replaceMission(1, missionType);
+                        } else if (bttnElement.classList.contains("index2")) {
+                            const missionType = this.arrMission[2].type;
+                            this.arrMission.splice(2, 1);
+                            this.replaceMission(2, missionType);
+                        }
+                    }
+                    ticketsOptionElement?.querySelectorAll("button").forEach((bttn) => bttn.style.backgroundColor = "#E91E63");
+                    this.currentCycleIndex = 0;
+                }, {once: true})
+            }
+        }
+    }
+
+    replaceMission(missionPosition: number, missionType: string) {
+        let randomIndex;
+        do {
+            randomIndex = this.generateRandomIndexNb();
+        } while (this.listMissions[randomIndex].type === missionType);
+
+        const newMission = this.listMissions[randomIndex];
+        this.arrMission.splice(missionPosition, 0, newMission);
         
-        const instructionElement = document.createElement("p"); 
-        instructionElement.textContent = newMission.displayInstruction();
+        const instructionElement = document.createElement("p");
+        instructionElement.textContent = newMission.getInstruction();
 
-        let arrMissionIndexIncremented = this.arrMissionSavedIndex;
-        arrMissionIndexIncremented++;
-        this.displayMissionElement?.insertBefore(instructionElement, this.displayMissionElement.childNodes[arrMissionIndexIncremented]); 
-
-        this.createMissionClassName(this.arrMission[this.arrMissionSavedIndex], instructionElement);
+        const childDisplayMissionElement = this.displayMissionElement?.children[missionPosition] as Element;
+        this.displayMissionElement?.replaceChild(instructionElement, childDisplayMissionElement);
+        
+        this.addMissionClassName(newMission, instructionElement);
     }
 
     generateRandomIndexNb() {
