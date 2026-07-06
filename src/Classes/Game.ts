@@ -64,19 +64,22 @@ export default class Game {
                     switch (mission.type) {
                         case "allocatedTimeMission": 
                         mission.checkCompletion(playerCurrentActivity, this.player.score, () => {
-                            this.mission.handleCompletedMission(".allocatedTime", "allocatedTimeMission");
+                            this.mission.handleCompletedMission("allocatedTimeMission");
+                            this.mission.handleTicketCycle();
                         })
                         break;
 
                         case "alternateMission": 
                         mission.checkCompletion(playerCurrentActivity, this.player.score, () => {
-                            this.mission.handleCompletedMission(".alternatedMissionElement", "alternateMission");    
+                            this.mission.handleCompletedMission("alternateMission");
+                            this.mission.handleTicketCycle();
                         })
                         break;
 
                         case "repeatedMission": 
                         mission.checkCompletion(playerCurrentActivity, this.player.score, () => {
-                            this.mission.handleCompletedMission(".repeatedMission", "repeatedMission");    
+                            this.mission.handleCompletedMission("repeatedMission"); 
+                            this.mission.handleTicketCycle();
                         })
                         break;
                     }
@@ -115,4 +118,5 @@ const doYoga = new AllocatedTimeMission("Fais du yoga", 20, 100, "sport");
 const doBreakDanse = new RepeatedMission("fais du break danse", 4, 100, "danse");
 const watchandSport = new AlternateMission ("regarde un reel", "fais du yoga", 100, {"regarde un reel": "ordi", "fais du yoga": "sport"});
 const missions = new MissionManager([doYoga, doBreakDanse, watchandSport]);
+
 new Game(lyly, maman, missions).playingPhase();
