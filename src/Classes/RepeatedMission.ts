@@ -4,12 +4,12 @@ import Mission from "./Mission";
 export default class RepeatedMission extends Mission {
     repeatedActivity = 0; 
 
-    constructor (missionLabel: string, completionCriteria: number, bonusPoint: number, activityRelated: string) {
-        super(missionLabel, completionCriteria, "repeatedMission", bonusPoint, activityRelated)
+    constructor (activityLabel: string, completionCriteria: number, bonusPoint: number, activityRelated: string) {
+        super(activityLabel, completionCriteria, "repeatedMission", bonusPoint, activityRelated)
     }
 
-    displayInstruction() {
-        return `${this.missionLabel} ${this.completionCriteria} fois de suite.`;
+    getInstruction() {
+        return `${this.activityLabel} ${this.completionCriteria} fois de suite.`;
     }
 
     checkCompletion(currentActivity: string | null, playerScore: number, onCompletion: Function) {

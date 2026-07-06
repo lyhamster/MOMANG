@@ -5,12 +5,12 @@ export default class AllocatedTimeMission extends Mission {
     timer =  0;
     completionCriteriaCount: string | number = 0;
 
-    constructor (missionLabel: string, completionCriteria: number, bonusPoint: number, activityRelated: string) {
-        super(missionLabel, completionCriteria, "allocatedTimeMission", bonusPoint, activityRelated);
+    constructor (activityLabel: string, completionCriteria: number, bonusPoint: number, activityRelated: string) {
+        super(activityLabel, completionCriteria, "allocatedTimeMission", bonusPoint, activityRelated);
     }
 
-    displayInstruction() {
-        return `${this.missionLabel} dans les ${this.completionCriteria} prochaines secondes.`;
+    getInstruction() {
+        return `${this.activityLabel} dans les ${this.completionCriteria} prochaines secondes.`;
     }
 
     override initializeCompletion(onCompletion: Function) {
