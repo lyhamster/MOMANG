@@ -12,3 +12,22 @@
     flex-direction: row;
     gap: 10px;
 }
+
+.missionWrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.ticketsOption {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.ticketsOption > button {
+    border-radius: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: #E91E63;
+    border: none;
+}
