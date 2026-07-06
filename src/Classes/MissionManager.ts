@@ -91,10 +91,9 @@ export default class MissionManager {
         return newRandomIndex;
     }
 
-    removeMissionAndSaveIndex(elementLabel: string, labelMissionType: string) {
-        const elementInstruction = document.querySelector(elementLabel);
-        elementInstruction?.remove();
+    removeMissionAndSaveIndex(labelMissionType: string) {
         this.arrMissionSavedIndex = this.arrMission.findIndex((element) => element.type  === labelMissionType);
+        this.missionTypeSaved = this.arrMission[this.arrMissionSavedIndex].type;
         this.arrMission.splice(this.arrMissionSavedIndex, 1);
     }
 
@@ -103,7 +102,7 @@ export default class MissionManager {
             case "allocatedTimeMission": 
                 childElement.classList.add("allocatedTime");
                 mission.initializeCompletion(() => {
-                    this.handleCompletedMission(".allocatedTime", "allocatedTimeMission");
+                    this.handleCompletedMission("allocatedTimeMission");
                 })
             break; 
 
