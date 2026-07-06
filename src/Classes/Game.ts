@@ -38,7 +38,8 @@ export default class Game {
     playingPhase(): void {
         this.startRandomMomangActivity();
         this.mission.displayMissions();
-        document.querySelector("body")?.addEventListener("click", (e) => {
+        const activityWrapperElement = document.querySelector(".activitiesWrapper");
+        activityWrapperElement?.addEventListener("click", (e) => {
             this.handlePlayerActivity(e);
             if (this.player.health === 0) {
                 this.stopGame();
