@@ -28,9 +28,9 @@ export default class AllocatedTimeMission extends Mission {
 
     checkCompletion(currentActivity: string | null, playerScore: number, onCompletion: Function) {
         if (currentActivity === this.activityRelated) {
+            this.resetMission();
             playerScore += this.bonusPoint;
             onCompletion();
-            this.resetMission();
         }
     }
 

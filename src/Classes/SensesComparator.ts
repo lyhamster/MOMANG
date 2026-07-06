@@ -7,6 +7,6 @@ export default class SensesComparator{
     }
 
     makeComparison () {
-        return this.sensesA.some(sense => this.sensesB.includes(sense));
+        return this.sensesA.some(sense => this.sensesB?.includes(sense));
     }
 }

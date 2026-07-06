@@ -1,5 +1,5 @@
 class Debugger {
-    isInConsole: boolean = true;
+    isInConsole: boolean = false;
     
     log(id: string, value: unknown) {
         if(this.isInConsole) { 
