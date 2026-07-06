@@ -28,8 +28,7 @@ export default class Game {
         
         const momangObject = this.momang.listActivities[momangRandomIndexActivity];
         momangObject.changeDuration(randomDurationActivity);
-        // Debugger.log("momangCurrentActivity", momangObject.label);    
-        // Debugger.log("momangFullDuration", momangObject.givenDuration);    
+
         this.momang.doActivity(momangObject.label, () => {
             this.startRandomMomangActivity();
         });
@@ -48,9 +47,12 @@ export default class Game {
         })
     }
 
-    handlePlayerActivity(e: PointerEvent) {
+    handlePlayerActivity(e: Event) {
         let eventTarget = e.target;
         if (eventTarget instanceof Element) { 
+            if (this.player.formerActivity && this.player.formerActivity != eventTarget.className) {
+                this.player.stopActivity();
+            }
             if (this.player.currentActivity === eventTarget.className) { 
                 this.player.pauseActivity();
                 return;
@@ -81,6 +83,7 @@ export default class Game {
                 })
             });
             playerCurrentActivity = this.player.currentActivity;
+       
             const momangSensesArr = this.momang.getCurrentActivity().sensesArr;
             const playerSensesArr = this.player.getCurrentActivity().sensesArr;
 
