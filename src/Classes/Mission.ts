@@ -18,7 +18,9 @@ export default abstract class Mission {
     }
 
     abstract getInstruction(): string;
-    initializeCompletion(_callabck: Function): void {};
-    abstract checkCompletion(_currentActivity: string | null, _playerScore: number, _callback: Function): void;
-    abstract displayMissionProgression(): void;
+    initializeCompletion(_callabck: Function, _callbackTest: Function): void {};
+    abstract checkCompletion(_currentActivity: string | null, _playerScore: number, _callback: Function, _callBackTest: Function): void;
+    abstract displayMissionProgression(): string;
+    resetMission(): void {};
+
 }
