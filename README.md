@@ -39,7 +39,9 @@ Her state changes randomly, so you have to read the situation before acting.
 There are currently three types of missions:
 
 **Allocated-time:** complete an activity within a given time.
+
 **Repeated:** perform an action a certain number of times.
+
 **Alternate:** perform actions in a specific sequence.
 
 ---
