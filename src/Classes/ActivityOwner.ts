@@ -7,6 +7,13 @@ export default abstract class ActivityOwner <T extends CommonActivity> {
     currentActivityTimeout: number = 0; 
     formerActivity: string | null = null;
     activityTick: number = 1000;
+    static Do = {
+        rubbiks: "rubbiks",
+        danse: "danse",
+        eat: "eat",
+        ordi: "ordi",
+        sport: "sport",
+    };
 
     constructor(listActivities: T[]) {
         this.listActivities = listActivities;
