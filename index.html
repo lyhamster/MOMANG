@@ -4,44 +4,40 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="./src/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>momang</title>
   </head>
   <body>
+    <img src="/src/assets/Logo.svg">
   <section>
-    <div id="app"></div>
-    <button class="restartGame">restartGame</button>
-    <h4 class="momangTitle">Momang</h4>
-    <h5 class="momangCurrentActivity"><span>Idle</span></h5>
-    <div class="MomangActvieDetailsActivity">
-      <div class="momangCurrentTimer">currentTimer: <span></span></div>
-      <div class="momangSenses">senses: <span></span></div>
-      <div class="momangFullDuration">fullDuration: <span></span></div>
-    </div>
-    <h4 class="playerTitle">Player</h4>
-    <div class="formerActivity">Former activity: <span></span></div>
-    <div class="playerHealth">health: <span></span></div>
-    <div class="playerScore">score: <span></span></div>
-    <h5 class="playerCurrentActivity"><span>Idle</span></h5>
-    <div class="playerActiveDetailsActivity">
-      <div class="playerCurrentTimer">currentTimer: <span></span></div>
-      <div class="playerSenses">senes: <span></span></div>
-      <div class="playerFullDuration">fullDuration: <span></span></div>
-    </div>
-    <div class="activitiesWrapper">
-      <button class="sport">faire du sport</button>
-      <button class="danse">danser</button>
-      <button class="ordi">ordi</button>
+    <div class="playingWrapper">
+      <div id="app"></div>
+      <button class="restartGame">restartGame</button>
+      <h4 class="momangTitle">Momang</h4>
+      <h5 class="momangCurrentActivity"><span>Idle</span></h5>
+      <div class="MomangActvieDetailsActivity">
+        <div class="momangCurrentTimer">currentTimer: <span></span></div>
+        <div class="momangSenses">senses: <span></span></div>
+        <div class="momangFullDuration">fullDuration: <span></span></div>
+      </div>
+      <h4 class="playerTitle">Player</h4>
+      <div class="formerActivity">Former activity: <span></span></div>
+      <div class="playerHealth">health: <span></span></div>
+      <h5 class="playerCurrentActivity"><span>Idle</span></h5>
+      <div class="playerActiveDetailsActivity">
+        <div class="playerCurrentTimer">currentTimer: <span></span></div>
+        <div class="playerSenses">senes: <span></span></div>
+        <div class="playerFullDuration">fullDuration: <span></span></div>
+      </div>
+      <div class="activitiesWrapper">
+        <button class="sport">faire du sport</button>
+        <button class="danse">danser</button>
+        <button class="ordi">ordi</button>
+        <button class="eat">mange</button>
+      </div>
     </div>
   </section>
-  <div class="missionWrapper">
-    <div class="displayMission"></div>
-    <div class="ticketsOption">
-      <button class="prout"></button>
-      <button class="index1"></button>
-      <button class="index2"></button>
-    </div>
-  </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
