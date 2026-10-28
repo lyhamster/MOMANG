@@ -13,7 +13,6 @@ export default class Momang extends ActivityOwner <MomangActivity> {
                 this.currentActivity = activityName;
                 this.currentActivityTimeout = setInterval(() => {
                     this.seconds++;
-                    // Debugger.log("momangCurrentTimer", this.seconds);
                     if (this.seconds >= activity.givenDuration) {
                         this.stopActivity();
                         onActivityEnd()

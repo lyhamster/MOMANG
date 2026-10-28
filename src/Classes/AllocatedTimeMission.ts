@@ -5,31 +5,32 @@ export default class AllocatedTimeMission extends Mission {
     timer =  0;
     completionCriteriaCount: string | number = 0;
 
-    constructor (missionLabel: string, completionCriteria: number, bonusPoint: number, activityRelated: string) {
-        super(missionLabel, completionCriteria, "allocatedTimeMission", bonusPoint, activityRelated);
+    constructor (activityLabel: string, completionCriteria: number, bonusPoint: number, activityRelated: string) {
+        super(activityLabel, completionCriteria, "allocatedTimeMission", bonusPoint, activityRelated);
     }
 
-    displayInstruction() {
-        return `${this.missionLabel} dans les ${this.completionCriteria} prochaines secondes.`;
+    getInstruction() {
+        return `${this.activityLabel} dans les ${this.completionCriteria} prochaines secondes.`;
     }
 
-    override initializeCompletion(onCompletion: Function) {
+    override initializeCompletion(onCompletedMission: Function, onProgression: Function) {
         this.completionCriteriaCount = this.completionCriteria;
         this.timer = setInterval(() => {
             if (typeof this.completionCriteriaCount === "number") {
                 this.completionCriteriaCount--;
+                onProgression();
                 if (this.completionCriteriaCount === 0) {
+                    onCompletedMission();
                     this.resetMission();
-                    onCompletion();
                 }
             }
         }, this.missionTick);
     }
 
-    checkCompletion(currentActivity: string | null, playerScore: number, onCompletion: Function) {
+    checkCompletion(currentActivity: string | null, playerScore: number, onCompletedMission: Function) {
         if (currentActivity === this.activityRelated) {
             playerScore += this.bonusPoint;
-            onCompletion();
+            onCompletedMission();
             this.resetMission();
         }
     }
@@ -40,7 +41,7 @@ export default class AllocatedTimeMission extends Mission {
         return;
     }
 
-    displayMissionProgression() {
-        return this.completionCriteria;
+    displayMissionProgression(): string {
+        return `${this.completionCriteriaCount}`;
     }
 }

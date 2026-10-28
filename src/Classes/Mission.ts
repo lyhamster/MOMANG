@@ -1,5 +1,5 @@
 export default abstract class Mission {
-    missionLabel: string;
+    activityLabel: string;
     completionCriteria: number | string; 
     type: string;
     bonusPoint: number; 
@@ -9,16 +9,18 @@ export default abstract class Mission {
     static repeatedMission = "repeatedMission";
     static alternateMission = "alternateMission";
 
-    constructor(missionLabel: string, completionCriteria: number | string, type: string, bonusPoint: number, activityRelated: string | object) {
-        this.missionLabel = missionLabel;
+    constructor(activityLabel: string, completionCriteria: number | string, type: string, bonusPoint: number, activityRelated: string | object) {
+        this.activityLabel = activityLabel;
         this.completionCriteria = completionCriteria;
         this.type = type;
         this.bonusPoint = bonusPoint;
         this.activityRelated = activityRelated;
     }
 
-    abstract displayInstruction(): string;
-    initializeCompletion(_callabck: Function): void {};
-    abstract checkCompletion(_currentActivity: string | null, _playerScore: number, _callback: Function): void;
-    abstract displayMissionProgression(): void;
+    abstract getInstruction(): string;
+    initializeCompletion(_onMissionCompleted: Function, _onProgression: Function): void {};
+    abstract checkCompletion(_currentActivity: string | null, _playerScore: number, _onMissionCompleted: Function, _onProgressionUpdate: Function): void;
+    abstract displayMissionProgression(): string;
+    resetMission(): void {};
+
 }

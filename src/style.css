@@ -1,9 +1,46 @@
+@font-face {
+    font-family: "super mindset";
+    src: url(/src/assets/fonts/super_mindset/Super\ Mindset.ttf);
+}
+
+@keyframes bonusPoint {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+body {
+    min-height: 100vh;
+}
+
+.gochi-hand-regular {
+  font-family: "Gochi Hand", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+section {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+}
+
+.playingWrapper {
+    width: 100%;
+    height: auto;
+}
+
 .sport, .danse, .caca {
     border: 1px solid black;
     padding: 10px;
     font-weight: bold;
     box-shadow: 0px 2px black;
-    width: 5%;
     border-radius: 5px;
 }
 
@@ -11,4 +48,190 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+}
+
+.missionWrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.missionModalWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: auto;
+}
+
+.missionImgWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    /* height: auto; */
+}
+
+.missionTitle {
+    position: absolute;
+    content: url(/src/assets/mission/missionTitle.svg);
+    z-index: 1;
+    top: 15px;
+    width: 40%;
+}
+
+.missionBg {
+    position: relative;
+    width: 100%;
+    content: url(/src/assets/mission/missionBg.svg);
+}
+
+.missionFg {
+    content: url(/src/assets/mission/missionSecondBg.svg);
+    position: absolute;
+    left: -13px;
+    top: 48px;
+    width: 100%;
+}
+
+.missionInstructionContentWrapper {
+    z-index: 1;
+    bottom: -65px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    justify-content: space-between;
+}
+
+.missionInstructionContentWrapper p {
+    font-family: "Gochi Hand";
+    font-size: 15px;
+}
+
+.missionContentBox {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.missionContent {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.missionStateProgression {
+    white-space: pre;
+}
+
+.bttnRefresh {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.bttnRefreshbg {
+    width: 85%;
+}
+
+.iconRefreshZero, 
+.iconRefreshOne,
+.iconRefreshTwo {
+    width: 35%;
+}
+
+.dashboardPanel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboardPanel p {
+    font-family: "Gochi Hand";
+    font-size: 40px;
+    left: 60px;
+    margin: unset;
+}
+
+.iconActivityWrapper, .refreshWrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconMissionBttn,
+.iconRefreshZero, 
+.iconRefreshOne,
+.iconRefreshTwo {
+    position: absolute;
+}
+
+.timerWrapper {
+    position: relative;
+}
+
+.activityDashboard {
+    border-radius: 20px;
+    background-color: #EFEBCA;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    position: relative;
+}
+
+.timerBg {
+    position: relative;
+    width: 90px;
+    top: 0;
+    left: 0;
+}
+
+.timerFg {
+    position: absolute;
+    width: 24px;
+    left: 46%;
+    top: 39%;
+    z-index: 1;
+}
+
+.timerTip {
+    position: absolute;
+    width: 14px;
+    top: 20%;
+    left: 50%;
+    z-index: 0;
+    transform-origin: 50% 80%;
+}
+
+.playerScore span{
+    font-family: "super mindset";
+    display: flex;
+    justify-content: end;
+}
+
+.totalScore {
+    font-size: 70px;
+}
+
+.activityPoint {
+    font-size: 42px;
+}
+
+.momangBg {
+    display: flex;
+    gap: 10px;
+}
+
+.momangBg div {
+    width: 20px;
+    height: 20px;
+    background: pink;
 }
